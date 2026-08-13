@@ -204,15 +204,15 @@
                 <div class="bg-white/5 p-4 rounded-full mb-3 group-hover:bg-neon/20 transition-colors">
                   <span class="material-icons text-5xl text-white group-hover:text-neon">photo_camera</span>
                 </div>
-                <span class="font-bold text-sm tracking-widest uppercase text-white group-hover:text-neon">Ketuk Buka Kamera</span>
+                <span class="font-bold text-sm tracking-widest uppercase text-white group-hover:text-neon text-center px-4">Ketuk Buka Kamera</span>
               </div>
               <!-- Video / Canvas -->
               <video id="video-preview" autoplay playsinline class="w-full h-full object-cover hidden-force transform scale-x-[-1]"></video>
               <canvas id="canvas-result" class="w-full h-full object-cover hidden-force"></canvas>
             </div>
             
-            <div id="gps-status" class="mb-6 text-sm font-semibold text-amber-400 flex items-center justify-center gap-2 bg-black/30 py-2 px-4 rounded-lg w-full max-w-[340px]">
-              <span class="material-icons text-lg">location_searching</span> Menunggu Sinkronisasi GPS...
+            <div id="gps-status" class="mb-6 text-sm font-semibold text-muted flex items-center justify-center gap-2 bg-black/30 py-2 px-4 rounded-lg w-full max-w-[340px] transition-all duration-300">
+              <span class="material-icons text-lg">info</span> Ketuk kamera untuk sinkronisasi lokasi.
             </div>
             
             <button id="btn-absen" class="btn-neon hidden-force max-w-[340px] shadow-[0_0_20px_rgba(0,255,170,0.3)] animate__animated animate__fadeInUp" onclick="prosesAbsensi()">
@@ -583,45 +583,66 @@
 
     var videoElem = document.getElementById('video-preview'), canvasElem = document.getElementById('canvas-result'), streamRef = null, userLat, userLon;
     
-    function startCamera() {
-      // 1. CEK GPS & GEOFENCE TERLEBIH DAHULU
+    // UPGRADE: SINKRONISASI LIVE GEOFENCE SEBELUM KAMERA DIBUKA
+    async function startCamera() {
       let gpsUI = document.getElementById('gps-status');
-      gpsUI.innerHTML=`<span class="material-icons text-lg animate-spin">sync</span> Memverifikasi Lokasi...`;
+      let camPlaceholder = document.getElementById('cam-placeholder');
+      
+      // 1. Tahan Kamera & Loading API Server
+      camPlaceholder.classList.add('hidden-force');
+      gpsUI.innerHTML = `<span class="material-icons text-lg animate-spin">sync</span> Menyinkronkan Geofence Server...`;
+      gpsUI.className = 'mb-6 text-sm font-semibold text-blue-400 flex items-center justify-center gap-2 bg-blue-500/10 py-3 px-4 rounded-xl w-full max-w-[340px] border border-blue-500/30 transition-all';
+      
+      // Request Live Koordinat dari Admin
+      var resGeo = await apiRequest('getLiveGeofence');
+      if(!resGeo.success) {
+          gpsUI.innerHTML = `<span class="material-icons text-lg">error_outline</span> Gagal Mengambil Data Server`;
+          gpsUI.classList.replace('text-blue-400', 'text-red-400'); gpsUI.classList.replace('bg-blue-500/10', 'bg-red-500/10'); gpsUI.classList.replace('border-blue-500/30', 'border-red-500/30');
+          showToast('Koneksi terputus. Gagal verifikasi aturan Geofence.', true);
+          camPlaceholder.classList.remove('hidden-force');
+          return; // STOP
+      }
+      var liveGeo = resGeo.data;
+
+      // 2. Jika Server Respon, Lanjut Cek GPS HP Mahasiswa
+      gpsUI.innerHTML = `<span class="material-icons text-lg animate-spin">location_searching</span> Mencari Sinyal GPS...`;
       gpsUI.className = 'mb-6 text-sm font-semibold text-amber-400 flex items-center justify-center gap-2 bg-amber-400/10 py-3 px-4 rounded-xl w-full max-w-[340px] border border-amber-400/30 transition-all';
       
       navigator.geolocation.getCurrentPosition(
         p => {
           userLat = p.coords.latitude; userLon = p.coords.longitude;
           
-          let jarak = getHaversineDistanceJS(session.data.geofence.lat, session.data.geofence.lon, userLat, userLon);
-          let radMax = session.data.geofence.rad;
+          let jarak = getHaversineDistanceJS(liveGeo.lat, liveGeo.lon, userLat, userLon);
+          let radMax = liveGeo.rad;
           
+          // 3. LOGIKA BLOKIR JIKA DI LUAR RADIUS
           if (jarak > radMax) {
              gpsUI.innerHTML=`<span class="material-icons text-lg">block</span> Jarak ${jarak}m (Maks ${radMax}m). Akses Ditolak.`;
-             gpsUI.classList.replace('text-amber-400', 'text-red-400'); gpsUI.classList.replace('bg-amber-400/10', 'bg-red-500/10'); gpsUI.classList.replace('border-amber-400/30', 'border-red-500/30');
+             gpsUI.classList.replace('text-amber-400', 'text-red-400'); gpsUI.classList.replace('bg-amber-400/10', 'bg-red-500/20'); gpsUI.classList.replace('border-amber-400/30', 'border-red-500/50');
              showToast(`Anda berada di luar radius RSGM (${jarak} Meter). Absen diblokir.`, true);
-             return; // STOP EXECUTION
+             camPlaceholder.classList.remove('hidden-force'); // Tampilkan layar ketuk lagi
+             return; // STOP EXECUTION (KAMERA TIDAK DIBUKA)
           }
 
-          // 2. JIKA MASUK RADIUS, BUKA KAMERA
+          // 4. JIKA MASUK RADIUS (SUKSES) -> BUKA KAMERA
           gpsUI.innerHTML=`<span class="material-icons text-lg">my_location</span> GPS Terkunci (${jarak}m dari Pusat).`;
           gpsUI.classList.replace('text-amber-400', 'text-neon'); gpsUI.classList.replace('bg-amber-400/10', 'bg-neon/10'); gpsUI.classList.replace('border-amber-400/30', 'border-neon/30');
           
-          document.getElementById('cam-placeholder').classList.add('hidden-force'); 
           videoElem.classList.remove('hidden-force');
           
           if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }).then(s => {
               streamRef = s; videoElem.srcObject = s; document.getElementById('btn-absen').classList.remove('hidden-force');
-            }).catch(e => { showToast('Kamera diblokir oleh browser!', true); document.getElementById('cam-placeholder').classList.remove('hidden-force'); });
+            }).catch(e => { showToast('Kamera diblokir oleh browser!', true); camPlaceholder.classList.remove('hidden-force'); });
           } else showToast('Browser Anda tidak support WebRTC Kamera.', true);
         },
         e => { 
-          gpsUI.innerHTML=`<span class="material-icons text-lg">error</span> Akses Lokasi Ditolak!`; 
-          gpsUI.classList.replace('text-amber-400', 'text-red-400'); gpsUI.classList.replace('bg-amber-400/10', 'bg-red-500/10'); gpsUI.classList.replace('border-amber-400/30', 'border-red-500/30');
+          gpsUI.innerHTML=`<span class="material-icons text-lg">location_off</span> Akses Lokasi Ditolak/Gagal!`; 
+          gpsUI.classList.replace('text-amber-400', 'text-red-400'); gpsUI.classList.replace('bg-amber-400/10', 'bg-red-500/20'); gpsUI.classList.replace('border-amber-400/30', 'border-red-500/50');
           showToast('Wajib izinkan akses Lokasi (GPS) pada browser untuk absen.', true);
+          camPlaceholder.classList.remove('hidden-force');
         }, 
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     }
 
