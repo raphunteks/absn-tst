@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "name": "portal-koas-enterprise",
+    "headers": [
+        {
+            "source": "/(.)",
+            "headers": [
+                {
+                    "key": "Permissions-Policy",
+                    "value": "camera=, geolocation=, fullscreen="
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "*"
+                }
+            ]
+        }
+    ]
+}

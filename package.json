@@ -1,0 +1,18 @@
+{
+    "name": "portal-koas-enterprise",
+    "version": "2.1.0",
+    "description": "Frontend Web App untuk Absensi KOAS Enterprise Edition by Zettbos",
+    "main": "index.html",
+    "scripts": {
+        "start": "echo 'Static HTML deployed on Vercel'"
+    },
+    "keywords": [
+        "koas",
+        "absensi",
+        "zettbos",
+        "vercel",
+        "gas"
+    ],
+    "author": "Zettbos",
+    "license": "MIT"
+}
