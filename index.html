@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Portal KOAS Enterprise | Zettbos</title>
   
-  <!-- FAVICON DARI GITHUB -->
+  <!-- FAVICON -->
   <link rel="icon" href="axalogo.png" type="image/png">
   <link rel="apple-touch-icon" href="axalogo.png">
   
@@ -17,62 +17,42 @@
   <style>
     /* CSS3 ZETTBOS ENTERPRISE - Mobile & Desktop Friendly */
     :root {
-      --bg-dark: #070a13; 
-      --bg-card: rgba(21, 27, 38, 0.7); 
-      --neon-green: #00ffaa;
-      --neon-hover: #00cc88; 
-      --text-main: #ffffff; 
-      --text-muted: #8b9bb4;
+      --bg-dark: #070a13; --bg-card: rgba(21, 27, 38, 0.7); 
+      --neon-green: #00ffaa; --neon-hover: #00cc88; 
+      --text-main: #ffffff; --text-muted: #8b9bb4;
       --border-glass: rgba(0, 255, 170, 0.15); 
       --shadow-neon: 0 0 20px rgba(0, 255, 170, 0.3);
       --gradient-bg: linear-gradient(135deg, #070a13 0%, #111722 100%);
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    
-    body { background: var(--gradient-bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; scroll-behavior: smooth; }
+    body { background: var(--gradient-bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
 
-    /* GLOBAL LOADER / SPINNER */
-    #global-loader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(7, 10, 19, 0.85); backdrop-filter: blur(5px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-    }
+    /* GLOBAL LOADER */
+    #global-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 10, 19, 0.85); backdrop-filter: blur(5px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     #global-loader.active { opacity: 1; pointer-events: auto; }
     .spinner { width: 50px; height: 50px; border: 4px solid var(--border-glass); border-top: 4px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* Login / Landing Page Styling */
-    #login-page {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(circle at top right, rgba(0, 255, 170, 0.08), transparent 50%), var(--bg-dark);
-      z-index: 1000; transition: opacity 0.5s ease;
-    }
-    .login-box {
-      width: 90%; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(20px);
-      border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px 25px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.6); text-align: center;
-    }
+    /* Login Page */
+    #login-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at top right, rgba(0, 255, 170, 0.08), transparent 50%), var(--bg-dark); z-index: 1000; transition: opacity 0.5s ease; }
+    .login-box { width: 90%; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px 25px; box-shadow: 0 15px 50px rgba(0,0,0,0.6); text-align: center; }
     .login-logo img { width: 70px; height: auto; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0,255,170,0.5)); }
     .login-tabs { display: flex; margin-bottom: 25px; border-radius: 10px; background: rgba(0,0,0,0.4); padding: 5px; }
     .log-tab { flex: 1; padding: 12px; cursor: pointer; border-radius: 8px; font-weight: 600; color: var(--text-muted); transition: 0.3s; font-size: 0.95rem; }
     .log-tab.active { background: var(--neon-green); color: var(--bg-dark); box-shadow: var(--shadow-neon); }
-    
     .login-form { display: none; animation: fadeIn 0.4s ease; }
     .login-form.active { display: block; }
     
-    /* Navbar */
+    /* Navbar & Container */
     .navbar { display: none; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(7, 10, 19, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-glass); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
     .brand { font-size: 1.2rem; font-weight: 800; color: var(--neon-green); display: flex; align-items: center; gap: 10px;}
     .brand img { width: 30px; height: auto; }
     .nav-actions { display: flex; align-items: center; gap: 15px; }
     .user-badge { background: rgba(0,255,170,0.1); color: var(--neon-green); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; border: 1px solid rgba(0,255,170,0.4); font-weight: 600; }
-    
     .container { padding: 25px 5%; max-width: 1300px; margin: auto; display: none; }
     
-    /* Sub-Tabs */
+    /* Tabs & Content */
     .sub-tabs { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
     .sub-tab-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: var(--text-muted); padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 0.95rem; transition: all 0.3s; font-weight: 500; }
     .sub-tab-btn:hover { border-color: var(--neon-hover); color: var(--neon-hover); }
@@ -81,145 +61,106 @@
     .sub-tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* UI Elements */
+    /* UI Components */
     .glass-card { background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border-glass); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0, 0.4); }
-    h2, h3 { margin-bottom: 15px; color: var(--text-main); font-weight: 700; letter-spacing: 0.5px; }
+    h2, h3 { margin-bottom: 15px; color: var(--text-main); font-weight: 700; }
     p { color: var(--text-muted); margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
 
     .form-group { margin-bottom: 18px; text-align: left; }
-    label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
     input, select, textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: var(--text-main); font-size: 1rem; transition: all 0.3s; }
-    input:focus, select:focus { outline: none; border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0,255,170,0.2); background: rgba(0,0,0,0.5); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0,255,170,0.2); background: rgba(0,0,0,0.5); }
     
-    .btn-primary { background: var(--neon-green); color: var(--bg-dark); border: none; padding: 15px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.05rem; transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .btn-primary { background: var(--neon-green); color: var(--bg-dark); border: none; padding: 15px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.05rem; transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; text-transform: uppercase; }
     .btn-primary:hover { background: var(--neon-hover); box-shadow: var(--shadow-neon); transform: translateY(-2px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-    
     .btn-outline { background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 12px 18px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-weight: bold; }
     .btn-outline:hover { background: rgba(0, 255, 170, 0.1); }
-    
     .btn-danger { background: rgba(255, 68, 68, 0.1); color: #ff4444; border: 1px solid #ff4444; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
-    .btn-danger:hover { background: rgba(255, 68, 68, 0.2); }
 
-    /* Custom Grids */
     .grid-2 { display: grid; grid-template-columns: 1fr; gap: 25px; }
     @media(min-width: 800px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 25px; }
-    .stat-card { background: rgba(0,255,170,0.03); border: 1px solid var(--border-glass); border-radius: 12px; padding: 25px; text-align: center; transition: 0.3s; }
-    .stat-card:hover { transform: translateY(-5px); border-color: var(--neon-green); }
+    .stat-card { background: rgba(0,255,170,0.03); border: 1px solid var(--border-glass); border-radius: 12px; padding: 25px; text-align: center; }
     .stat-card h3 { font-size: 3rem; color: var(--neon-green); margin-bottom: 5px; font-weight: 800;}
 
-    /* Camera, Table & Utilities */
-    .camera-wrapper { position: relative; width: 100%; max-width: 400px; margin: 0 auto 15px auto; border-radius: 16px; overflow: hidden; border: 2px dashed var(--border-glass); background: #000; aspect-ratio: 3/4; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+    /* Kamera */
+    .camera-wrapper { position: relative; width: 100%; max-width: 400px; margin: 0 auto 15px auto; border-radius: 16px; overflow: hidden; border: 2px dashed var(--border-glass); background: #000; aspect-ratio: 3/4; }
     #video-preview, #canvas-result { width: 100%; height: 100%; object-fit: cover; display: none; }
     .camera-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; transition: 0.3s; }
     .camera-placeholder:hover { background: rgba(0,255,170,0.05); color: var(--neon-green); }
     
-    .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95rem; }
+    /* Table & Tools */
+    .custom-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
     .custom-table th { text-align: left; padding: 15px; border-bottom: 2px solid var(--neon-green); color: var(--text-muted); font-weight: 600; }
     .custom-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
-    .custom-table tr:hover td { background: rgba(255,255,255,0.02); }
     .badge { padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; display: inline-block; }
     .bg-green { background: rgba(0,255,170,0.15); color: var(--neon-green); border: 1px solid rgba(0,255,170,0.3); }
 
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; align-items: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid var(--border-glass); }
+    
     /* Toast */
     #toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 10000; display: flex; flex-direction: column; gap: 12px; }
-    .toast { background: rgba(21, 27, 38, 0.95); backdrop-filter: blur(10px); border-left: 4px solid var(--neon-green); color: #fff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; font-weight: 500; }
+    .toast { background: rgba(21, 27, 38, 0.95); border-left: 4px solid var(--neon-green); color: #fff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s forwards; }
     .toast.error { border-left-color: #ff4444; }
-    @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    
+    @keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
   <!-- GLOBAL LOADER -->
-  <div id="global-loader">
-    <div class="spinner"></div>
-    <h3 style="color: var(--neon-green);">Memproses...</h3>
-    <p>Harap tunggu sebentar</p>
-  </div>
+  <div id="global-loader"><div class="spinner"></div><h3 style="color:var(--neon-green);">Memproses...</h3><p>Harap tunggu sebentar</p></div>
 
-  <!-- ============================================== -->
-  <!-- 1. LANDING PAGE / LOGIN                        -->
-  <!-- ============================================== -->
+  <!-- LOGIN -->
   <div id="login-page">
     <div class="login-box">
-      <!-- Menggunakan logo axalogo.png dari github -->
-      <div class="login-logo">
-        <img src="axalogo.png" alt="Zettbos Logo" onerror="this.outerHTML='<span class=\'material-icons\' style=\'font-size:4rem;color:var(--neon-green);\'>medical_services</span>'">
-      </div>
+      <div class="login-logo"><img src="axalogo.png" alt="Zettbos Logo" onerror="this.outerHTML='<span class=\'material-icons\' style=\'font-size:4rem;color:var(--neon-green);\'>medical_services</span>'"></div>
       <h2 style="margin-bottom:5px;">Portal KOAS</h2>
-      <p style="margin-bottom:25px; font-size:0.85rem;">Enterprise Edition by Zettbos</p>
+      <p style="margin-bottom:25px; font-size:0.85rem;">Enterprise Edition</p>
       
       <div class="login-tabs">
         <div class="log-tab active" onclick="switchLoginTab('form-mhs', this)">Mahasiswa</div>
         <div class="log-tab" onclick="switchLoginTab('form-admin', this)">Administrator</div>
       </div>
 
-      <!-- Login Mahasiswa -->
       <div id="form-mhs" class="login-form active">
-        <div class="form-group">
-          <label>NIM (Nomor Induk)</label>
-          <input type="text" id="log-nim" placeholder="Masukkan NIM Anda">
-        </div>
-        <div class="form-group">
-          <label>PIN Akses</label>
-          <input type="password" id="log-pin" placeholder="Default: 1234">
-        </div>
-        <button class="btn-primary" onclick="reqLoginMhs()" id="btn-log-mhs">
-          <span class="material-icons">login</span> Masuk Portal
-        </button>
+        <div class="form-group"><label>NIM</label><input type="text" id="log-nim" placeholder="Nomor Induk"></div>
+        <div class="form-group"><label>PIN Akses</label><input type="password" id="log-pin" placeholder="Default: 1234"></div>
+        <button class="btn-primary" onclick="reqLoginMhs()"><span class="material-icons">login</span> Masuk Portal</button>
       </div>
 
-      <!-- Login Admin -->
       <div id="form-admin" class="login-form">
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" id="log-user" placeholder="Admin Username">
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="log-pass" placeholder="Admin Password">
-        </div>
-        <button class="btn-primary" onclick="reqLoginAdmin()" id="btn-log-adm">
-          <span class="material-icons">admin_panel_settings</span> Akses Admin
-        </button>
+        <div class="form-group"><label>Username</label><input type="text" id="log-user" placeholder="Admin Username"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="log-pass" placeholder="Admin Password"></div>
+        <button class="btn-primary" onclick="reqLoginAdmin()"><span class="material-icons">admin_panel_settings</span> Akses Admin</button>
       </div>
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- 2. MAIN NAVBAR                                 -->
-  <!-- ============================================== -->
+  <!-- NAVBAR -->
   <nav class="navbar" id="main-nav">
-    <div class="brand">
-        <img src="axalogo.png" alt="Logo" onerror="this.outerHTML='<span class=\'material-icons\'>medical_services</span>'">
-        KOAS Portal
-    </div>
+    <div class="brand"><img src="axalogo.png" alt="Logo" onerror="this.style.display='none'"> KOAS Portal</div>
     <div class="nav-actions">
       <span class="user-badge" id="active-user-badge">Role</span>
-      <button class="btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="logout()">
-        <span class="material-icons" style="font-size:1rem; vertical-align:middle;">logout</span> Keluar
-      </button>
+      <button class="btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="logout()"><span class="material-icons" style="font-size:1rem; vertical-align:middle;">logout</span> Keluar</button>
     </div>
   </nav>
 
-  <!-- ============================================== -->
-  <!-- 3. CONTAINER (PORTAL MAHASISWA & ADMIN)        -->
-  <!-- ============================================== -->
+  <!-- CONTAINER UTAMA -->
   <div class="container" id="main-container">
 
-    <!-- PORTAL MAHASISWA -->
+    <!-- ==================================== -->
+    <!-- PORTAL MAHASISWA                     -->
+    <!-- ==================================== -->
     <div id="view-mhs" class="hidden">
       <div class="sub-tabs">
-        <button class="sub-tab-btn active" onclick="switchSubTab('view-mhs', 'mhs-absen', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">how_to_reg</span> Form Absensi</button>
-        <button class="sub-tab-btn" onclick="switchSubTab('view-mhs', 'mhs-stats', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">analytics</span> Statistik Ku & Profil</button>
+        <button class="sub-tab-btn active" onclick="switchSubTab('view-mhs', 'mhs-absen', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">how_to_reg</span> Tab Absensi</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('view-mhs', 'mhs-stats', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">analytics</span> Tab Statistik Ku</button>
       </div>
 
+      <!-- Tab Absensi -->
       <div id="mhs-absen" class="sub-tab-content active">
         <div class="grid-2">
-          <!-- Data Auto-Fill -->
           <div class="glass-card">
             <h2>Data Stase Berjalan</h2>
             <div class="form-group"><label>Nama Lengkap</label><input type="text" id="mhs-nama" readonly style="color:var(--neon-green); font-weight:bold; background:rgba(0,255,170,0.05);"></div>
@@ -228,51 +169,53 @@
               <div class="form-group"><label>Pilih Shift</label><select id="mhs-shift"></select></div>
             </div>
             <div style="background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); padding: 12px; border-radius: 8px; margin-top:10px;">
-                <p style="margin:0; font-size:0.85rem; color:#ffd700;"><span class="material-icons" style="font-size:1rem; vertical-align:middle;">warning</span> Pastikan Anda berada di area RSGM dan GPS menyala sebelum membuka kamera.</p>
+                <p style="margin:0; font-size:0.85rem; color:#ffd700;"><span class="material-icons" style="font-size:1rem; vertical-align:middle;">warning</span> Validasi Geofencing: Pastikan berada di area RSGM (GPS menyala).</p>
             </div>
           </div>
-          <!-- Kamera -->
           <div class="glass-card">
             <h2>Verifikasi Kehadiran</h2>
             <div class="camera-wrapper">
               <div class="camera-placeholder" id="cam-placeholder" onclick="startCamera()">
-                <span class="material-icons" style="font-size:3rem; margin-bottom:10px;">camera_alt</span>
-                <span style="font-weight:bold;">Ketuk untuk Buka Kamera</span>
+                <span class="material-icons" style="font-size:3rem; margin-bottom:10px;">camera_alt</span><span style="font-weight:bold;">Buka Kamera Watermark</span>
               </div>
               <video id="video-preview" autoplay playsinline></video>
               <canvas id="canvas-result"></canvas>
             </div>
-            <div id="gps-status" style="text-align:center; margin-bottom: 20px; font-size: 0.95rem; color: #ffd700; font-weight:600;">
-              <span class="material-icons" style="font-size: 1.2rem; vertical-align: middle;">location_on</span> Standby GPS...
-            </div>
-            <button id="btn-absen" class="btn-primary hidden" onclick="prosesAbsensi()">
-              <span class="material-icons">fingerprint</span> Kirim Presensi Sekarang
-            </button>
+            <div id="gps-status" style="text-align:center; margin-bottom: 20px; font-size: 0.95rem; color: #ffd700; font-weight:600;"><span class="material-icons" style="font-size: 1.2rem; vertical-align: middle;">location_on</span> Standby GPS...</div>
+            <button id="btn-absen" class="btn-primary hidden" onclick="prosesAbsensi()"><span class="material-icons">fingerprint</span> Kirim Presensi</button>
           </div>
         </div>
       </div>
 
+      <!-- Tab Statistik Ku -->
       <div id="mhs-stats" class="sub-tab-content">
         <div class="grid-2">
-          <div class="glass-card">
-            <h2>Grafik Kehadiran</h2>
-            <canvas id="mhsChart" width="400" height="250"></canvas>
+          <div>
+            <!-- FITUR BARU: WIDGET COUNTDOWN -->
+            <div class="glass-card" style="text-align:center; background: radial-gradient(circle, rgba(0,255,170,0.1) 0%, transparent 100%);">
+               <h3 id="mhs-countdown" style="font-size:3rem; margin:10px 0; color:var(--neon-green);">-- Hari</h3>
+               <p style="text-transform:uppercase; font-weight:bold; letter-spacing:1px; color:#fff;">Sisa Masa Stase Berjalan</p>
+            </div>
+            <div class="glass-card">
+              <h2><span class="material-icons" style="vertical-align:middle; color:var(--neon-green);">lock_reset</span> Ganti PIN Akses</h2>
+              <div class="form-group"><input type="password" id="pin-old" placeholder="PIN Lama"></div>
+              <div class="form-group"><input type="password" id="pin-new" placeholder="PIN Baru (Min. 4 Angka)"></div>
+              <button class="btn-outline" style="width:100%;" onclick="gantiPin(this)">Update PIN</button>
+            </div>
           </div>
           <div>
+            <div class="glass-card">
+              <h2>Personal Chart (Kehadiran)</h2>
+              <canvas id="mhsChart" width="400" height="250"></canvas>
+            </div>
             <div class="glass-card">
               <h2>Riwayat Terakhir</h2>
               <div style="overflow-x:auto;">
                   <table class="custom-table">
-                    <thead><tr><th>Tanggal</th><th>Departemen</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Tanggal</th><th>Stase</th><th>Status</th></tr></thead>
                     <tbody id="history-body"></tbody>
                   </table>
               </div>
-            </div>
-            <div class="glass-card">
-              <h2><span class="material-icons" style="vertical-align:middle; font-size:1.5rem; color:var(--neon-green);">lock_reset</span> Keamanan Akun</h2>
-              <div class="form-group"><label>PIN Lama</label><input type="password" id="pin-old" placeholder="Masukkan PIN lama"></div>
-              <div class="form-group"><label>PIN Baru</label><input type="password" id="pin-new" placeholder="Masukkan PIN baru (min. 4 angka)"></div>
-              <button class="btn-outline" style="width:100%; margin-top:10px;" onclick="gantiPin(this)">Update PIN Saya</button>
             </div>
           </div>
         </div>
@@ -280,52 +223,106 @@
     </div>
 
 
-    <!-- PORTAL ADMIN -->
+    <!-- ==================================== -->
+    <!-- PORTAL ADMIN                         -->
+    <!-- ==================================== -->
     <div id="view-admin" class="hidden">
       <div class="sub-tabs">
-        <button class="sub-tab-btn active" onclick="switchSubTab('view-admin', 'adm-dash', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">dashboard</span> Dashboard</button>
-        <button class="sub-tab-btn" onclick="switchSubTab('view-admin', 'adm-akun', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">manage_accounts</span> Data & Akun</button>
+        <button class="sub-tab-btn active" onclick="switchSubTab('view-admin', 'adm-dash', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">dashboard</span> Dashboard & Rekap</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('view-admin', 'adm-akun', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">manage_accounts</span> Mahasiswa & Rotasi</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('view-admin', 'adm-settings', this)"><span class="material-icons" style="font-size:1.1rem; vertical-align:text-bottom;">settings</span> Pengaturan Sistem</button>
       </div>
 
+      <!-- Tab Dashboard & Rekap -->
       <div id="adm-dash" class="sub-tab-content active">
+        <!-- FITUR BARU: ADVANCED FILTER -->
+        <div class="filter-bar">
+           <div style="font-weight:bold; color:var(--neon-green); margin-right:10px;"><span class="material-icons" style="vertical-align:middle;">filter_list</span> Filter Data:</div>
+           <input type="date" style="width:auto; padding:8px 12px;">
+           <select style="width:auto; padding:8px 12px;"><option>Semua Cluster</option><option>Cluster A</option></select>
+           <button class="btn-outline" style="padding:8px 15px;" onclick="showToast('Mockup: Data difilter.', false)">Terapkan</button>
+           <button class="btn-outline" style="padding:8px 15px; margin-left:auto; border-color:#ffcc00; color:#ffcc00;" onclick="showToast('Mockup: Export PDF diproses...', false)"><span class="material-icons" style="font-size:1rem;vertical-align:middle;">picture_as_pdf</span> Export PDF</button>
+        </div>
+
         <div class="stats-grid">
           <div class="stat-card"><h3 id="stat-mhs">--</h3><p>Total Mahasiswa</p></div>
           <div class="stat-card"><h3 id="stat-hadir">--</h3><p>Hadir Hari Ini</p></div>
         </div>
         <div class="glass-card">
-          <h2>Distribusi Departemen</h2>
-          <div style="max-width: 500px; margin: auto;">
+          <h2>Grafik Kehadiran Makro (Per Departemen)</h2>
+          <div style="max-width: 600px; margin: auto;">
              <canvas id="adminChart" width="400" height="250"></canvas>
           </div>
         </div>
       </div>
 
+      <!-- Tab Mahasiswa & Rotasi -->
       <div id="adm-akun" class="sub-tab-content">
         <div class="grid-2">
+          <!-- FITUR BARU: DRAG & DROP XLSX -->
+          <div class="glass-card" id="drop-zone" style="border: 2px dashed var(--neon-green); text-align:center; cursor:pointer; transition:0.3s; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height: 250px;">
+              <span class="material-icons" style="font-size:60px; color:var(--neon-green); margin-bottom:15px; pointer-events:none;">cloud_upload</span>
+              <h3 style="margin-bottom:10px; pointer-events:none;">Upload Data Master XLSX</h3>
+              <p style="pointer-events:none;">Seret file Excel ke sini atau <b>Klik</b> untuk memilih.<br>(Format: Nama, NIM, WA, Cluster).</p>
+              <input type="file" id="file-input" accept=".xlsx, .xls" class="hidden">
+          </div>
+          
           <div class="glass-card">
-            <h2>Manajemen Akun Mahasiswa</h2>
-            <p>Daftar mahasiswa dan akses reset PIN darurat.</p>
-            <div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+            <h2>Manajemen Akun / Reset PIN</h2>
+            <div style="overflow-x: auto; max-height: 250px; overflow-y: auto;">
               <table class="custom-table">
                 <thead><tr><th>Nama & NIM</th><th>Cluster</th><th>Aksi</th></tr></thead>
                 <tbody id="admin-mhs-body"></tbody>
               </table>
             </div>
           </div>
-          <div class="glass-card">
-            <h2>Import Data Master (XLSX)</h2>
-            <div style="border: 2px dashed var(--neon-green); border-radius:16px; padding:40px; text-align:center; cursor:pointer; transition:0.3s; background:rgba(0,255,170,0.02);" onclick="document.getElementById('file-input').click()" onmouseover="this.style.background='rgba(0,255,170,0.08)'" onmouseout="this.style.background='rgba(0,255,170,0.02)'">
-              <span class="material-icons" style="font-size:60px; color:var(--neon-green); margin-bottom:15px;">cloud_upload</span>
-              <h3 style="margin-bottom:10px;">Upload File Excel</h3>
-              <p>Format kolom: Nama, NIM, WA, Cluster.<br>Sistem otomatis mengamankan PIN ke '1234'.</p>
-              <input type="file" id="file-input" accept=".xlsx, .xls" class="hidden">
-            </div>
-          </div>
+        </div>
+
+        <!-- FITUR BARU: MOCKUP MANAJEMEN JADWAL -->
+        <div class="glass-card">
+           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+              <h2 style="margin:0;">Manajemen Jadwal & Rotasi (Mockup)</h2>
+              <button class="btn-outline" style="padding:6px 12px; font-size:0.85rem;" onclick="showToast('Mockup: Tambah Jadwal', false)"><span class="material-icons" style="font-size:1rem;vertical-align:middle;">add</span> Buat Rotasi</button>
+           </div>
+           <table class="custom-table">
+              <thead><tr><th>Cluster</th><th>Stase Tujuan</th><th>Periode</th><th>Status</th></tr></thead>
+              <tbody>
+                 <tr><td>Cluster A</td><td>Bedah Mulut</td><td>01 Ags - 31 Des</td><td><span class="badge bg-green">Aktif</span></td></tr>
+                 <tr><td>Cluster B</td><td>Konservasi Gigi</td><td>01 Ags - 31 Des</td><td><span class="badge" style="background:rgba(255,204,0,0.2); color:#ffcc00;">Menunggu</span></td></tr>
+              </tbody>
+           </table>
+        </div>
+      </div>
+
+      <!-- FITUR BARU: TAB PENGATURAN SISTEM -->
+      <div id="adm-settings" class="sub-tab-content">
+        <div class="grid-2">
+           <div class="glass-card">
+              <h2><span class="material-icons" style="vertical-align:middle; color:var(--neon-green);">location_on</span> Titik Pusat Geofence</h2>
+              <p>Atur koordinat pusat RSGM dan batas jarak radius absen mahasiswa.</p>
+              <div class="form-group"><label>Latitude</label><input type="text" id="set-lat" placeholder="Contoh: -6.200000"></div>
+              <div class="form-group"><label>Longitude</label><input type="text" id="set-lon" placeholder="Contoh: 106.816666"></div>
+              <div class="form-group"><label>Batas Radius (Meter)</label><input type="number" id="set-rad" placeholder="Contoh: 150"></div>
+              <button class="btn-primary" onclick="reqSaveGeofence()"><span class="material-icons">save</span> Simpan Geofence</button>
+           </div>
+           
+           <div class="glass-card">
+              <h2><span class="material-icons" style="vertical-align:middle; color:var(--neon-green);">message</span> Template Pesan WA (Mockup)</h2>
+              <p>Konfigurasi pesan yang akan dikirim via Webhook ke nomor Konsulen / Mahasiswa.</p>
+              <div class="form-group">
+                 <label>Jenis Notifikasi</label>
+                 <select><option>Kehadiran Masuk (Konsulen)</option><option>Peringatan Terlambat (Mahasiswa)</option></select>
+              </div>
+              <div class="form-group">
+                 <label>Format Pesan (Gunakan {nama}, {stase})</label>
+                 <textarea rows="4">Halo Dok, Mahasiswa {nama} telah hadir di Stase {stase} pada jam {jam}.</textarea>
+              </div>
+              <button class="btn-outline" style="width:100%;" onclick="showToast('Mockup: Template WA tersimpan!', false)">Update Template</button>
+           </div>
         </div>
       </div>
     </div>
-
-  </div> <!-- End Container -->
+  </div>
 
   <div id="toast-container"></div>
 
@@ -333,61 +330,39 @@
   <!-- JAVASCRIPT LOGIC (REST API FETCH)              -->
   <!-- ============================================== -->
   <script>
-    
-    // URL WEB APP GAS - UBAH INI JIKA DEPLOY ULANG GAS!
     const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyCsv8wVzGlNH5urKIKFRNz-b4PudLMvHfYUpN_JRWTdnV3cl0CcpAmVJgFQ1KKZEGC/exec';
-
-    // Global UI State
     var session = { loggedIn: false, role: null, data: null };
     
-    function toggleLoader(show) {
-      const loader = document.getElementById('global-loader');
-      if (show) loader.classList.add('active');
-      else loader.classList.remove('active');
-    }
+    function toggleLoader(show) { document.getElementById('global-loader').classList[show ? 'add' : 'remove']('active'); }
 
     function showToast(msg, isError = false) {
       var container = document.getElementById('toast-container');
-      var toast = document.createElement('div');
-      toast.className = 'toast ' + (isError ? 'error' : '');
+      var toast = document.createElement('div'); toast.className = 'toast ' + (isError ? 'error' : '');
       toast.innerHTML = '<span class="material-icons">' + (isError ? 'error_outline' : 'check_circle') + '</span> ' + msg;
       container.appendChild(toast);
-      setTimeout(function() { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; setTimeout(()=>toast.remove(), 400); }, 4000);
+      setTimeout(function() { toast.style.transform = 'translateX(120%)'; setTimeout(()=>toast.remove(), 400); }, 4000);
     }
 
-    // Fungsi Utama HTTP Request ke Server Vercel/GAS
     async function apiRequest(action, payload = {}) {
       try {
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Text/plain mencegah CORS Preflight OPTIONS issue di GAS
-          body: JSON.stringify({ action: action, payload: payload })
-        });
-        const result = await response.json();
-        return result;
-      } catch (error) {
-        console.error("Fetch API Error:", error);
-        return { success: false, message: 'Koneksi ke Server gagal. Periksa jaringan internet Anda.' };
-      }
+        const response = await fetch(BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: action, payload: payload }) });
+        return await response.json();
+      } catch (error) { return { success: false, message: 'Koneksi ke Server gagal.' }; }
     }
-
     
     function switchLoginTab(tabId, btn) {
-      document.querySelectorAll('.login-form').forEach(function(el){ el.classList.remove('active'); });
-      document.querySelectorAll('.log-tab').forEach(function(el){ el.classList.remove('active'); });
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
+      document.querySelectorAll('.login-form, .log-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
     }
 
     function switchSubTab(parentView, tabId, btn) {
       var parent = document.getElementById(parentView);
-      parent.querySelectorAll('.sub-tab-content').forEach(function(el){ el.classList.remove('active'); });
-      parent.querySelectorAll('.sub-tab-btn').forEach(function(el){ el.classList.remove('active'); });
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
+      parent.querySelectorAll('.sub-tab-content, .sub-tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
       
       if(tabId === 'mhs-stats' && mhsChartInstance) mhsChartInstance.resize();
       if(tabId === 'adm-dash' && admChartInstance) admChartInstance.resize();
+      if(tabId === 'adm-settings') loadAdminSettings(); // Trigger fetch geo saat tab dibuka
     }
 
     function logout() {
@@ -396,290 +371,193 @@
       document.getElementById('main-container').style.display = 'none';
       document.getElementById('view-mhs').classList.add('hidden');
       document.getElementById('view-admin').classList.add('hidden');
-      
-      var lp = document.getElementById('login-page');
-      lp.style.display = 'flex';
-      setTimeout(function(){ lp.style.opacity = '1'; }, 50);
-      
-      if(streamRef) streamRef.getTracks().forEach(function(t){ t.stop(); }); // Matikan Kamera
+      document.getElementById('login-page').style.display = 'flex';
+      setTimeout(()=> document.getElementById('login-page').style.opacity = '1', 50);
+      if(streamRef) streamRef.getTracks().forEach(t => t.stop()); 
     }
 
     async function reqLoginMhs() {
-      var nim = document.getElementById('log-nim').value;
-      var pin = document.getElementById('log-pin').value;
+      var nim = document.getElementById('log-nim').value, pin = document.getElementById('log-pin').value;
       if(!nim || !pin) return showToast('Isi NIM & PIN!', true);
-      
       toggleLoader(true);
       var res = await apiRequest('doLoginMhs', { nim: nim, pin: pin });
       toggleLoader(false);
-      
-      if(res.success) {
-        session = { loggedIn: true, role: 'mhs', data: res.data };
-        buildPortalMhs();
-      } else showToast(res.message, true);
+      if(res.success) { session = { loggedIn: true, role: 'mhs', data: res.data }; buildPortalMhs(); } 
+      else showToast(res.message, true);
     }
 
     async function reqLoginAdmin() {
-      var user = document.getElementById('log-user').value;
-      var pass = document.getElementById('log-pass').value;
+      var user = document.getElementById('log-user').value, pass = document.getElementById('log-pass').value;
       if(!user || !pass) return showToast('Isi User & Pass!', true);
-      
       toggleLoader(true);
       var res = await apiRequest('doLoginAdmin', { user: user, pass: pass });
       toggleLoader(false);
-      
-      if(res.success) {
-        session = { loggedIn: true, role: 'admin', data: res.data };
-        buildPortalAdmin();
-      } else showToast(res.message, true);
+      if(res.success) { session = { loggedIn: true, role: 'admin', data: res.data }; buildPortalAdmin(); } 
+      else showToast(res.message, true);
     }
 
     function enterPortal(roleName) {
       var lp = document.getElementById('login-page');
       lp.style.opacity = '0';
-      setTimeout(function(){
-        lp.style.display = 'none';
-        document.getElementById('main-nav').style.display = 'flex';
-        document.getElementById('main-container').style.display = 'block';
-        document.getElementById('active-user-badge').innerText = roleName;
+      setTimeout(() => {
+        lp.style.display = 'none'; document.getElementById('main-nav').style.display = 'flex';
+        document.getElementById('main-container').style.display = 'block'; document.getElementById('active-user-badge').innerText = roleName;
       }, 500);
     }
 
+    // --- PORTAL MAHASISWA LOGIC ---
     var mhsChartInstance = null;
-    
     async function buildPortalMhs() {
       document.getElementById('view-mhs').classList.remove('hidden');
       document.getElementById('mhs-nama').value = session.data.nama;
       enterPortal('Mahasiswa: ' + session.data.nim);
       
       toggleLoader(true);
-      
-      // Load Stase Data & Shift (Concurrent if possible, but sequential is safer for UI flow)
       var resData = await apiRequest('fetchStudentData', { nim: session.data.nim });
       if(resData.success) {
         document.getElementById('mhs-stase').value = resData.data.stase.departemen;
-        var sel = '';
-        for(var i=0; i<resData.data.availableShifts.length; i++) sel += '<option>' + resData.data.availableShifts[i] + '</option>';
-        document.getElementById('mhs-shift').innerHTML = sel;
+        document.getElementById('mhs-shift').innerHTML = resData.data.availableShifts.map(s => `<option>${s}</option>`).join('');
+        
+        // Logika Widget Countdown
+        if(resData.data.stase.tglSelesai) {
+           let pts = resData.data.stase.tglSelesai.split('/');
+           if(pts.length === 3) {
+              let diff = Math.ceil((new Date(pts[2], pts[1]-1, pts[0]) - new Date()) / (1000*60*60*24));
+              let cdEl = document.getElementById('mhs-countdown');
+              cdEl.innerText = diff > 0 ? diff + ' Hari' : 'Selesai';
+              if(diff <= 0) cdEl.style.color = '#ffcc00';
+           }
+        }
       }
       
       var resStats = await apiRequest('fetchStudentStats', { nim: session.data.nim });
       if(resStats.success) {
-        var ctx = document.getElementById('mhsChart').getContext('2d');
         if(mhsChartInstance) mhsChartInstance.destroy();
-        mhsChartInstance = new Chart(ctx, { type: 'doughnut', data: { labels: ['Hadir','Telat','Alpha'], datasets: [{ data: [resStats.data.hadir, resStats.data.telat, resStats.data.alpha], backgroundColor: ['#00ffaa','#ffcc00','#ff4444'], borderWidth: 0 }] }, options:{plugins:{legend:{position:'bottom', labels:{color:'#fff', padding: 20}}}, cutout: '70%'} });
+        mhsChartInstance = new Chart(document.getElementById('mhsChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Hadir','Telat','Alpha'], datasets: [{ data: [resStats.data.hadir, resStats.data.telat, resStats.data.alpha], backgroundColor: ['#00ffaa','#ffcc00','#ff4444'], borderWidth:0 }] }, options:{plugins:{legend:{position:'bottom', labels:{color:'#fff', padding: 20}}}, cutout: '70%'} });
         
-        var tBody = document.getElementById('history-body'), hStr = '';
-        if(resStats.data.history.length === 0) hStr = '<tr><td colspan="3" style="text-align:center;">Belum ada riwayat absensi.</td></tr>';
-        for(var i=0; i<resStats.data.history.length; i++){ var h = resStats.data.history[i]; hStr += '<tr><td>'+h.tanggal+'<br><small style="color:var(--text-muted)">'+h.jam+'</small></td><td>'+h.dep+'</td><td><span class="badge bg-green">'+h.status+'</span></td></tr>'; }
-        tBody.innerHTML = hStr;
+        document.getElementById('history-body').innerHTML = resStats.data.history.length ? resStats.data.history.map(h => `<tr><td>${h.tanggal}<br><small style="color:var(--text-muted)">${h.jam}</small></td><td>${h.dep}</td><td><span class="badge bg-green">${h.status}</span></td></tr>`).join('') : '<tr><td colspan="3" style="text-align:center;">Belum ada riwayat.</td></tr>';
       }
-      
       toggleLoader(false);
     }
 
     async function gantiPin(btnEl) {
-      var oldP = document.getElementById('pin-old').value;
-      var newP = document.getElementById('pin-new').value;
-      if(!oldP || !newP) return showToast('Lengkapi formulir PIN!', true);
-      if(newP.length < 4) return showToast('PIN Baru minimal 4 karakter!', true);
-      
+      var oldP = document.getElementById('pin-old').value, newP = document.getElementById('pin-new').value;
+      if(!oldP || newP.length < 4) return showToast('Form PIN tidak valid!', true);
       btnEl.innerHTML = 'Memproses...'; btnEl.disabled = true;
       var res = await apiRequest('changePinMhs', { nim: session.data.nim, oldPin: oldP, newPin: newP });
-      
-      btnEl.innerHTML = 'Update PIN Saya'; btnEl.disabled = false;
+      btnEl.innerHTML = 'Update PIN'; btnEl.disabled = false;
       showToast(res.message, !res.success);
       if(res.success) { document.getElementById('pin-old').value=''; document.getElementById('pin-new').value=''; }
     }
 
-    // Kamera & Absen Mhs
+    // Kamera & Absen 
     var videoElem = document.getElementById('video-preview'), canvasElem = document.getElementById('canvas-result'), streamRef = null, userLat, userLon;
-    
     function startCamera() {
-      document.getElementById('cam-placeholder').classList.add('hidden');
-      videoElem.style.display = 'block';
-      
+      document.getElementById('cam-placeholder').classList.add('hidden'); videoElem.style.display = 'block';
       if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
-        .then(function(s){
-          streamRef = s; 
-          videoElem.srcObject = s; 
-          document.getElementById('btn-absen').classList.remove('hidden');
-          
-          document.getElementById('gps-status').innerHTML = '<span class="spinner" style="width:15px;height:15px;display:inline-block;border-width:2px;margin:0 5px -2px 0;"></span> Mencari Satelit GPS...';
-          
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }).then(s => {
+          streamRef = s; videoElem.srcObject = s; document.getElementById('btn-absen').classList.remove('hidden');
           navigator.geolocation.getCurrentPosition(
-            function(p){ 
-              userLat = p.coords.latitude; 
-              userLon = p.coords.longitude; 
-              document.getElementById('gps-status').innerHTML='<span class="material-icons" style="font-size: 1.2rem; vertical-align: middle;">my_location</span> GPS Terkunci (Akurasi: '+Math.round(p.coords.accuracy)+'m)'; 
-              document.getElementById('gps-status').style.color='#00ffaa'; 
-            },
-            function(err){ 
-              document.getElementById('gps-status').innerHTML='<span class="material-icons" style="font-size: 1.2rem; vertical-align: middle;">location_disabled</span> GPS Gagal: Izinkan akses Lokasi!'; 
-              document.getElementById('gps-status').style.color='#ff4444'; 
-              console.error(err);
-            }, 
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            p => { userLat = p.coords.latitude; userLon = p.coords.longitude; document.getElementById('gps-status').innerHTML=`<span class="material-icons" style="font-size: 1.2rem; vertical-align: middle;">my_location</span> GPS Terkunci (${Math.round(p.coords.accuracy)}m)`; document.getElementById('gps-status').style.color='#00ffaa'; },
+            e => { document.getElementById('gps-status').innerHTML='Akses Lokasi Ditolak!'; document.getElementById('gps-status').style.color='#ff4444'; }, 
+            { enableHighAccuracy: true }
           );
-        })
-        .catch(function(err){ 
-          showToast('Kamera diblokir atau tidak ditemukan!', true);
-          document.getElementById('cam-placeholder').classList.remove('hidden');
-          videoElem.style.display = 'none';
-        });
-      } else {
-        showToast('Browser Anda tidak mendukung fitur Kamera.', true);
-      }
+        }).catch(e => { showToast('Kamera diblokir!', true); document.getElementById('cam-placeholder').classList.remove('hidden'); });
+      } else showToast('Browser tidak support Kamera.', true);
     }
 
     async function prosesAbsensi() {
-      if(!userLat || !userLon) return showToast('Tunggu GPS terkunci atau pastikan akses Lokasi diizinkan!', true);
+      if(!userLat) return showToast('Tunggu GPS terkunci!', true);
+      var btn = document.getElementById('btn-absen'); toggleLoader(true);
       
-      var btn = document.getElementById('btn-absen'); 
-      toggleLoader(true);
-      
-      // Ambil Foto dari Video
-      var ctx = canvasElem.getContext('2d'); 
-      canvasElem.width = videoElem.videoWidth; 
-      canvasElem.height = videoElem.videoHeight;
+      var ctx = canvasElem.getContext('2d'); canvasElem.width = videoElem.videoWidth; canvasElem.height = videoElem.videoHeight;
       ctx.drawImage(videoElem, 0, 0, canvasElem.width, canvasElem.height);
+      // Auto Watermark
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; ctx.fillRect(0, canvasElem.height - 60, canvasElem.width, 60);
+      ctx.fillStyle = '#00ffaa'; ctx.font = 'bold 16px Arial'; ctx.fillText('KOAS ZETTBOS', 15, canvasElem.height - 35);
+      ctx.fillStyle = '#ffffff'; ctx.font = '12px Arial'; ctx.fillText(new Date().toLocaleString('id-ID') + ' | ' + userLat.toFixed(5) + ',' + userLon.toFixed(5), 15, canvasElem.height - 15);
       
-      // Beri Watermark Otomatis
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-      ctx.fillRect(0, canvasElem.height - 60, canvasElem.width, 60);
-      ctx.fillStyle = '#00ffaa'; 
-      ctx.font = 'bold 16px Arial'; 
-      ctx.fillText('KOAS ZETTBOS', 15, canvasElem.height - 35);
-      ctx.fillStyle = '#ffffff'; 
-      ctx.font = '12px Arial';
-      ctx.fillText(new Date().toLocaleString('id-ID') + ' | ' + userLat.toFixed(5) + ',' + userLon.toFixed(5), 15, canvasElem.height - 15);
-      
-      var base64Img = canvasElem.toDataURL('image/jpeg', 0.6); // Kompresi image
-      
-      // Matikan kamera untuk menghemat resource
-      if(streamRef) streamRef.getTracks().forEach(function(t){ t.stop(); });
-      videoElem.style.display = 'none'; 
-      canvasElem.style.display = 'block';
+      var base64Img = canvasElem.toDataURL('image/jpeg', 0.6);
+      if(streamRef) streamRef.getTracks().forEach(t => t.stop());
+      videoElem.style.display = 'none'; canvasElem.style.display = 'block';
 
-      var payload = { 
-        nim: session.data.nim, 
-        nama: session.data.nama, 
-        wa: session.data.wa, 
-        cluster: session.data.cluster, 
-        departemen: document.getElementById('mhs-stase').value, 
-        shift: document.getElementById('mhs-shift').value, 
-        lat: userLat, 
-        lon: userLon, 
-        fotoBase64: base64Img 
-      };
-      
+      var payload = { nim: session.data.nim, nama: session.data.nama, wa: session.data.wa, cluster: session.data.cluster, departemen: document.getElementById('mhs-stase').value, shift: document.getElementById('mhs-shift').value, lat: userLat, lon: userLon, fotoBase64: base64Img };
       var res = await apiRequest('processAbsen', payload);
-      
-      toggleLoader(false);
-      showToast(res.message, !res.success); 
-      if(res.success) {
-          btn.innerHTML = '<span class="material-icons">check_circle</span> Absensi Berhasil Diterima';
-          btn.style.background = '#00ffaa';
-          btn.style.color = '#000';
-          btn.disabled = true;
-      }
+      toggleLoader(false); showToast(res.message, !res.success); 
+      if(res.success) { btn.innerHTML = '<span class="material-icons">check_circle</span> Selesai'; btn.style.background = '#00ffaa'; btn.style.color = '#000'; btn.disabled = true; }
     }
 
+    // --- PORTAL ADMIN LOGIC ---
     var admChartInstance = null;
-    
     async function buildPortalAdmin() {
-      document.getElementById('view-admin').classList.remove('hidden');
-      enterPortal('SuperAdmin');
-      
+      document.getElementById('view-admin').classList.remove('hidden'); enterPortal('SuperAdmin');
       toggleLoader(true);
       var res = await apiRequest('getAdminDashboard');
       toggleLoader(false);
-      
       if(res.success){
-        document.getElementById('stat-mhs').innerText = res.data.mhs;
-        document.getElementById('stat-hadir').innerText = res.data.hadir;
-        
+        document.getElementById('stat-mhs').innerText = res.data.mhs; document.getElementById('stat-hadir').innerText = res.data.hadir;
         var ctx = document.getElementById('adminChart').getContext('2d');
         if(admChartInstance) admChartInstance.destroy();
-        
-        // Warna Gradasi Bar Chart
-        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, '#00ffaa');   
-        gradient.addColorStop(1, '#0088ff');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400); gradient.addColorStop(0, '#00ffaa'); gradient.addColorStop(1, '#0088ff');
+        admChartInstance = new Chart(ctx, { type:'bar', data: { labels: res.data.chart.labels, datasets:[{label:'Kehadiran', data:res.data.chart.values, backgroundColor: gradient, borderRadius: 8 }] }, options: { plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{color:'#8b9bb4', stepSize:1}, grid:{color:'rgba(255,255,255,0.05)'}}, x:{ticks:{color:'#8b9bb4'}, grid:{display:false}}} } });
 
-        admChartInstance = new Chart(ctx, { 
-          type:'bar', 
-          data: {
-            labels: res.data.chart.labels, 
-            datasets:[{label:'Total Kehadiran', data:res.data.chart.values, backgroundColor: gradient, borderRadius: 8 }]
-          }, 
-          options: {
-            plugins:{legend:{display:false}}, 
-            scales:{y:{beginAtZero:true, ticks:{color:'#8b9bb4', stepSize:1}, grid:{color:'rgba(255,255,255,0.05)'}}, x:{ticks:{color:'#8b9bb4'}, grid:{display:false}}}
-          } 
-        });
-
-        // Render Tabel Akun
-        var tbody = document.getElementById('admin-mhs-body'), html = '';
-        for(var i=0; i<res.data.mhsList.length; i++){
-          var m = res.data.mhsList[i];
-          html += '<tr><td><strong>'+m.nama+'</strong><br><small style="color:var(--neon-green);">NIM: '+m.nim+'</small></td><td><span class="badge bg-green">'+m.cluster+'</span></td><td><button class="btn-danger" onclick="resetPin(\''+m.nim+'\')"><span class="material-icons" style="font-size:1rem;vertical-align:middle;">restart_alt</span> Reset PIN</button></td></tr>';
-        }
-        tbody.innerHTML = html;
-      } else {
-        showToast('Gagal memuat dashboard!', true);
-      }
+        document.getElementById('admin-mhs-body').innerHTML = res.data.mhsList.map(m => `<tr><td><strong>${m.nama}</strong><br><small style="color:var(--neon-green);">NIM: ${m.nim}</small></td><td><span class="badge bg-green">${m.cluster}</span></td><td><button class="btn-danger" onclick="resetPin('${m.nim}')"><span class="material-icons" style="font-size:1rem;vertical-align:middle;">restart_alt</span> Reset</button></td></tr>`).join('');
+      } else showToast('Gagal muat dashboard', true);
     }
 
     async function resetPin(nim) {
-      if(confirm('Peringatan: Anda akan me-reset PIN mahasiswa dengan NIM ' + nim + ' menjadi "1234". Lanjutkan?')) {
-        toggleLoader(true);
-        var res = await apiRequest('resetPinAdmin', { nim: nim });
-        toggleLoader(false);
-        showToast(res.message, !res.success);
-      }
+      toggleLoader(true); var res = await apiRequest('resetPinAdmin', { nim: nim }); toggleLoader(false);
+      showToast(res.message, !res.success);
     }
 
-    document.getElementById('file-input').addEventListener('change', function(e){
-      if(e.target.files.length) {
-        showToast('Membaca file Excel (XLSX)...', false);
+    // Admin Settings (Geofence Fetch)
+    async function loadAdminSettings() {
+      toggleLoader(true); var res = await apiRequest('getAdminSettings'); toggleLoader(false);
+      if(res.success) {
+         document.getElementById('set-lat').value = res.data.lat;
+         document.getElementById('set-lon').value = res.data.lon;
+         document.getElementById('set-rad').value = res.data.rad;
+      }
+    }
+    
+    // Admin Settings (Geofence Save)
+    async function reqSaveGeofence() {
+       var lat = document.getElementById('set-lat').value, lon = document.getElementById('set-lon').value, rad = document.getElementById('set-rad').value;
+       if(!lat || !lon || !rad) return showToast('Lengkapi koordinat!', true);
+       toggleLoader(true);
+       var res = await apiRequest('saveGeofence', { lat: lat, lon: lon, rad: rad });
+       toggleLoader(false); showToast(res.message, !res.success);
+    }
+
+    // Fitur Drag & Drop Excel
+    var dropZone = document.getElementById('drop-zone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.background = 'rgba(0,255,170,0.1)'; dropZone.style.borderColor = '#fff'; });
+    dropZone.addEventListener('dragleave', e => { dropZone.style.background = 'transparent'; dropZone.style.borderColor = 'var(--neon-green)'; });
+    dropZone.addEventListener('drop', e => {
+       e.preventDefault(); dropZone.style.background = 'transparent'; dropZone.style.borderColor = 'var(--neon-green)';
+       if(e.dataTransfer.files.length) processExcelFile(e.dataTransfer.files[0]);
+    });
+    dropZone.addEventListener('click', () => document.getElementById('file-input').click());
+    document.getElementById('file-input').addEventListener('change', e => { if(e.target.files.length) processExcelFile(e.target.files[0]); });
+
+    function processExcelFile(file) {
+        showToast('Membaca Excel...', false);
         var reader = new FileReader();
         reader.onload = async function(evt) {
           try {
-            var wb = XLSX.read(new Uint8Array(evt.target.result), {type:'array'});
-            var rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header:1});
+            var rows = XLSX.utils.sheet_to_json(XLSX.read(new Uint8Array(evt.target.result), {type:'array'}).Sheets[XLSX.read(new Uint8Array(evt.target.result), {type:'array'}).SheetNames[0]], {header:1});
             var data = [], td = new Date().toLocaleDateString('id-ID');
-            
-            // Loop dari baris ke-1 (melewati header)
-            for(var i=1; i<rows.length; i++) {
-               if(rows[i][0] && rows[i][1]) {
-                 // Sesuai struktur: Nama[0], NIM[1], WA[2], Cluster[3], TanggalImport[td]
-                 data.push([String(rows[i][0]), String(rows[i][1]), String(rows[i][2]||''), String(rows[i][3]||'Umum'), td]);
-               }
-            }
+            for(var i=1; i<rows.length; i++) if(rows[i][0] && rows[i][1]) data.push([String(rows[i][0]), String(rows[i][1]), String(rows[i][2]||''), String(rows[i][3]||'Umum'), td]);
             
             if(data.length) {
-               toggleLoader(true);
-               var res = await apiRequest('processBulkMahasiswa', data);
-               toggleLoader(false);
-               
-               showToast(res.message, !res.success);
-               if(res.success) buildPortalAdmin(); // Refresh Tabel
-            } else {
-               showToast('Data Excel kosong atau format tidak sesuai kriteria', true);
-            }
-          } catch (err) {
-             console.error(err);
-             showToast('Gagal memproses file XLSX!', true);
-          }
-          
-          // Reset file input
+               toggleLoader(true); var res = await apiRequest('processBulkMahasiswa', data); toggleLoader(false);
+               showToast(res.message, !res.success); if(res.success) buildPortalAdmin(); 
+            } else showToast('Data kosong/format salah!', true);
+          } catch (err) { showToast('Gagal memproses XLSX!', true); }
           document.getElementById('file-input').value = "";
         };
-        reader.readAsArrayBuffer(e.target.files[0]);
-      }
-    });
+        reader.readAsArrayBuffer(file);
+    }
   </script>
 </body>
 </html>
